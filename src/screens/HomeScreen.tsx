@@ -11,8 +11,19 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useSelector } from 'react-redux';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  runOnJS,
+} from 'react-native-reanimated';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store';
+import { switchCharacter } from '../store/chatSlice';
 import MessageBubble from '../components/MessageBubble';
 import TypingIndicator from '../components/TypingIndicator';
 import ChatInput from '../components/ChatInput';
@@ -20,6 +31,7 @@ import SwipeOverlay from '../components/SwipeOverlay';
 import { HeartIcon, ChatIcon, PhoneIcon, MenuIcon } from '../components/Icons';
 
 const HomeScreen: React.FC = () => {
+  const dispatch = useDispatch();
   const { messages, isTyping, currentCharacter } = useSelector(
     (state: RootState) => state.chat
   );
@@ -27,15 +39,60 @@ const HomeScreen: React.FC = () => {
   // State for swipe overlay - show on first render
   const [showSwipeOverlay, setShowSwipeOverlay] = useState(true);
 
+  const translateY = useSharedValue(0);
+
+  // Mika Kobuyashi character data
+  const mikaCharacter = {
+    id: '11',
+    name: 'Mika Kobuyashi',
+    avatar: require('../../assets/images/mika-avatar.jpg'),
+    description:
+      "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
+    likes: 1200,
+    messages: 34200,
+    greeting: 'Eh-h u are my new brother? *Shy looks*',
+  };
+
   const handleCloseOverlay = () => {
     setShowSwipeOverlay(false);
   };
+
+  const handleSwipeToNextChat = () => {
+    dispatch(switchCharacter(mikaCharacter));
+    setShowSwipeOverlay(false);
+  };
+
+  const gestureHandler =
+    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+      onStart: (_, context) => {
+        context.startY = translateY.value;
+      },
+      onActive: (event, context) => {
+        translateY.value = context.startY + event.translationY;
+      },
+      onEnd: (event) => {
+        // If swiped up more than 100px, switch to next character
+        if (event.translationY < -100) {
+          runOnJS(handleSwipeToNextChat)();
+        }
+        translateY.value = 0;
+      },
+    });
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: translateY.value }],
+    };
+  });
 
   return (
     <View style={styles.container}>
       {/* Background Image with Blur */}
       <ImageBackground
-        source={require('../../assets/images/background.jpg')}
+        source={
+          currentCharacter?.avatar ||
+          require('../../assets/images/background.jpg')
+        }
         style={styles.backgroundImage}
         blurRadius={9}
       />
@@ -50,68 +107,83 @@ const HomeScreen: React.FC = () => {
         style={styles.bottomGradient}
       />
 
-      <SafeAreaView style={styles.safeArea}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <View style={styles.characterInfo}>
-              <Image
-                source={require('../../assets/images/avatar.jpg')}
-                style={styles.avatar}
-              />
-              <Text style={styles.characterName}>
-                {currentCharacter?.name || 'Anya Volkov'}
+      <PanGestureHandler onGestureEvent={gestureHandler}>
+        <Animated.View style={[styles.safeAreaWrapper, animatedStyle]}>
+          <SafeAreaView style={styles.safeArea}>
+            {/* Header */}
+            <View style={styles.header}>
+              <View style={styles.headerContent}>
+                <View style={styles.characterInfo}>
+                  <Image
+                    source={
+                      currentCharacter?.avatar ||
+                      require('../../assets/images/avatar.jpg')
+                    }
+                    style={styles.avatar}
+                  />
+                  <Text style={styles.characterName}>
+                    {currentCharacter?.name || 'Anya Volkov'}
+                  </Text>
+                </View>
+                <View style={styles.headerActions}>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <PhoneIcon />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.actionButton}>
+                    <MenuIcon />
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {/* Stats */}
+              <BlurView intensity={60} style={styles.statsContainer}>
+                <View style={styles.stat}>
+                  <HeartIcon />
+                  <Text style={styles.statText}>
+                    {((currentCharacter?.likes || 1200) / 1000).toFixed(1)}k
+                  </Text>
+                </View>
+                <View style={styles.stat}>
+                  <ChatIcon />
+                  <Text style={styles.statText}>
+                    {((currentCharacter?.messages || 34200) / 1000).toFixed(1)}k
+                  </Text>
+                </View>
+              </BlurView>
+            </View>
+
+            {/* Character Description */}
+            <BlurView intensity={80} style={styles.descriptionContainer}>
+              <Text style={styles.descriptionText}>
+                {currentCharacter?.description ||
+                  "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More"}
               </Text>
-            </View>
-            <View style={styles.headerActions}>
-              <TouchableOpacity style={styles.actionButton}>
-                <PhoneIcon />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.actionButton}>
-                <MenuIcon />
-              </TouchableOpacity>
-            </View>
-          </View>
+            </BlurView>
 
-          {/* Stats */}
-          <BlurView intensity={60} style={styles.statsContainer}>
-            <View style={styles.stat}>
-              <HeartIcon />
-              <Text style={styles.statText}>1.2k</Text>
-            </View>
-            <View style={styles.stat}>
-              <ChatIcon />
-              <Text style={styles.statText}>34.2k</Text>
-            </View>
-          </BlurView>
-        </View>
+            {/* Chat Messages */}
+            <ScrollView
+              style={styles.messagesContainer}
+              contentContainerStyle={styles.messagesContent}
+              showsVerticalScrollIndicator={false}
+            >
+              {messages.map((message) => (
+                <MessageBubble key={message.id} message={message} />
+              ))}
+              {isTyping && <TypingIndicator />}
+            </ScrollView>
 
-        {/* Character Description */}
-        <BlurView intensity={80} style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>
-            {currentCharacter?.description ||
-              "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More"}
-          </Text>
-        </BlurView>
-
-        {/* Chat Messages */}
-        <ScrollView
-          style={styles.messagesContainer}
-          contentContainerStyle={styles.messagesContent}
-          showsVerticalScrollIndicator={false}
-        >
-          {messages.map((message) => (
-            <MessageBubble key={message.id} message={message} />
-          ))}
-          {isTyping && <TypingIndicator />}
-        </ScrollView>
-
-        {/* Chat Input */}
-        <ChatInput />
-      </SafeAreaView>
+            {/* Chat Input */}
+            <ChatInput />
+          </SafeAreaView>
+        </Animated.View>
+      </PanGestureHandler>
 
       {/* Swipe Overlay */}
-      <SwipeOverlay visible={showSwipeOverlay} onClose={handleCloseOverlay} />
+      <SwipeOverlay
+        visible={showSwipeOverlay}
+        onClose={handleCloseOverlay}
+        onSwipeUp={handleSwipeToNextChat}
+      />
     </View>
   );
 };
@@ -139,6 +211,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 271,
     bottom: 0,
+  },
+  safeAreaWrapper: {
+    flex: 1,
   },
   safeArea: {
     flex: 1,

@@ -70,6 +70,19 @@ const chatSlice = createSlice({
     setTyping: (state, action: PayloadAction<boolean>) => {
       state.isTyping = action.payload;
     },
+    switchCharacter: (state, action: PayloadAction<Character>) => {
+      state.currentCharacter = action.payload;
+      // Clear previous messages and add greeting from new character
+      state.messages = [
+        {
+          id: `greeting-${action.payload.id}`,
+          text: action.payload.greeting,
+          isUser: false,
+          timestamp: new Date(),
+        },
+      ];
+      state.isTyping = false;
+    },
   },
 });
 
@@ -79,6 +92,7 @@ export const {
   editMessage,
   setMessageEditing,
   setTyping,
+  switchCharacter,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

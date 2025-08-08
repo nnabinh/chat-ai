@@ -21,11 +21,16 @@ import { SwipeUpIcon, CloseIcon } from './Icons';
 interface SwipeOverlayProps {
   visible: boolean;
   onClose: () => void;
+  onSwipeUp?: () => void;
 }
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const SwipeOverlay: React.FC<SwipeOverlayProps> = ({ visible, onClose }) => {
+const SwipeOverlay: React.FC<SwipeOverlayProps> = ({
+  visible,
+  onClose,
+  onSwipeUp,
+}) => {
   const translateY = useSharedValue(0);
 
   const gestureHandler =
@@ -37,9 +42,13 @@ const SwipeOverlay: React.FC<SwipeOverlayProps> = ({ visible, onClose }) => {
         translateY.value = context.startY + event.translationY;
       },
       onEnd: (event) => {
-        // If swiped up more than 50px, close the overlay
+        // If swiped up more than 50px, trigger swipe up action or close overlay
         if (event.translationY < -50) {
-          runOnJS(onClose)();
+          if (onSwipeUp) {
+            runOnJS(onSwipeUp)();
+          } else {
+            runOnJS(onClose)();
+          }
         }
         translateY.value = 0;
       },

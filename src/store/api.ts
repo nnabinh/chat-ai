@@ -108,6 +108,16 @@ const mockCharacters: Character[] = [
     greeting:
       '*The wind carries her voice* The old woods have much to teach you.',
   },
+  {
+    id: '11',
+    name: 'Mika Kobuyashi',
+    avatar: require('../../assets/images/mika-avatar.jpg'),
+    description:
+      "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
+    likes: 1200,
+    messages: 34200,
+    greeting: 'Eh-h u are my new brother? *Shy looks*',
+  },
 ];
 
 export const api = createApi({
