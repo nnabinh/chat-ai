@@ -7,8 +7,13 @@ export const useCharacterDescription = () => {
     setIsDescriptionExpanded(!isDescriptionExpanded);
   };
 
+  const resetDescription = () => {
+    setIsDescriptionExpanded(false);
+  };
+
   return {
     isDescriptionExpanded,
     toggleDescription,
+    resetDescription,
   };
 };

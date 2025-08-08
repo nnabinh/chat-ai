@@ -5,8 +5,10 @@ import {
   TouchableOpacity,
   TextInput,
   StyleSheet,
+  TextStyle,
 } from 'react-native';
 import { Message } from '../../../types';
+import TypingIndicator from '@components/TypingIndicator';
 
 interface MessagesListProps {
   messages: Message[];
@@ -15,6 +17,7 @@ interface MessagesListProps {
   onLongPress: (message: Message) => void;
   onSaveEdit: (messageId: string) => void;
   onCancelEdit: (messageId: string) => void;
+  isTyping?: boolean;
 }
 
 export const MessagesList: React.FC<MessagesListProps> = ({
@@ -24,8 +27,12 @@ export const MessagesList: React.FC<MessagesListProps> = ({
   onLongPress,
   onSaveEdit,
   onCancelEdit,
+  isTyping = false,
 }) => {
-  const renderMarkdownText = (text: string, baseStyle: any) => {
+  const renderMarkdownText = (
+    text: string,
+    baseStyle: TextStyle | TextStyle[]
+  ) => {
     // Split text by markdown patterns while preserving delimiters
     const parts = text.split(/(\*\*.*?\*\*|\*.*?\*)/g);
 
@@ -60,10 +67,7 @@ export const MessagesList: React.FC<MessagesListProps> = ({
       {messages.map((message, index) => (
         <View
           key={message.id || index}
-          style={[
-            styles.messageContainer,
-            message.isUser ? styles.userMessage : styles.aiMessage,
-          ]}
+          style={[message.isUser ? styles.userMessage : styles.aiMessage]}
         >
           <TouchableOpacity
             style={[
@@ -124,17 +128,15 @@ export const MessagesList: React.FC<MessagesListProps> = ({
           )}
         </View>
       ))}
+      {isTyping && <TypingIndicator style={styles.typingIndicator} />}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   messagesWrapper: {
-    flex: 1,
     paddingHorizontal: 14,
-  },
-  messageContainer: {
-    marginBottom: 16,
+    gap: 8,
   },
   userMessage: {
     alignItems: 'flex-end',
@@ -229,5 +231,8 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 4,
     alignSelf: 'flex-end',
+  },
+  typingIndicator: {
+    marginLeft: 0,
   },
 });

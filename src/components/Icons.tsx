@@ -164,9 +164,8 @@ export const HeartIcon: React.FC<IconProps> = ({
 }) => (
   <Svg width={width} height={height} viewBox="0 0 12 12" fill="none">
     <Path
-      d="M1 3.5C1 2.11929 2.11929 1 3.5 1C4.88071 1 6 2.11929 6 3.5C6 2.11929 7.11929 1 8.5 1C9.88071 1 11 2.11929 11 3.5C11 5.5 6 10 6 10S1 5.5 1 3.5Z"
+      d="M9.5 7C10.245 6.27 11 5.395 11 4.25C11 3.52065 10.7103 2.82118 10.1945 2.30546C9.67882 1.78973 8.97935 1.5 8.25 1.5C7.37 1.5 6.75 1.75 6 2.5C5.25 1.75 4.63 1.5 3.75 1.5C3.02065 1.5 2.32118 1.78973 1.80546 2.30546C1.28973 2.82118 1 3.52065 1 4.25C1 5.4 1.75 6.275 2.5 7L6 10.5L9.5 7Z"
       stroke={color}
-      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -179,13 +178,25 @@ export const ChatIcon: React.FC<IconProps> = ({
   color = '#EBEBEB',
 }) => (
   <Svg width={width} height={height} viewBox="0 0 12 12" fill="none">
-    <Path
-      d="M1 4.5C1 3.11929 2.11929 2 3.5 2H8.5C9.88071 2 11 3.11929 11 4.5V7.5C11 8.88071 9.88071 10 8.5 10H5L1 11V4.5Z"
-      stroke={color}
-      strokeWidth="1"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <G clipPath="url(#clip0_1_250)">
+      <Path
+        d="M7 4.5C7 4.76522 6.89464 5.01957 6.70711 5.20711C6.51957 5.39464 6.26522 5.5 6 5.5H3L1 7.5V2C1 1.73478 1.10536 1.48043 1.29289 1.29289C1.48043 1.10536 1.73478 1 2 1H6C6.26522 1 6.51957 1.10536 6.70711 1.29289C6.89464 1.48043 7 1.73478 7 2V4.5Z"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M9 4.5H10C10.2652 4.5 10.5196 4.60536 10.7071 4.79289C10.8946 4.98043 11 5.23478 11 5.5V11L9 9H6C5.73478 9 5.48043 8.89464 5.29289 8.70711C5.10536 8.51957 5 8.26522 5 8V7.5"
+        stroke={color}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="clip0_1_250">
+        <Rect width="12" height="12" fill="white" />
+      </ClipPath>
+    </Defs>
   </Svg>
 );
 

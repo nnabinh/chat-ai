@@ -1464,7 +1464,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/prebuild-config@npm:^9.0.11":
+"@expo/prebuild-config@npm:^9.0.10, @expo/prebuild-config@npm:^9.0.11":
   version: 9.0.11
   resolution: "@expo/prebuild-config@npm:9.0.11"
   dependencies:
@@ -3097,6 +3097,7 @@ __metadata:
     expo-font: ^13.3.2
     expo-image-picker: ^16.1.4
     expo-linear-gradient: ^14.1.5
+    expo-splash-screen: ~0.30.10
     expo-status-bar: ~2.2.3
     husky: ^9.1.7
     lint-staged: ^16.1.4
@@ -4068,6 +4069,17 @@ __metadata:
   dependencies:
     invariant: ^2.2.4
   checksum: 7a405f20f0bc056c7409be6d00bf9ad5203cb461301b1ecf0a03380138965ea4fa8e1e2456035a2ea3cb6adb44eac3b40cb2e3a5328a4b91054911982029ad15
+  languageName: node
+  linkType: hard
+
+"expo-splash-screen@npm:~0.30.10":
+  version: 0.30.10
+  resolution: "expo-splash-screen@npm:0.30.10"
+  dependencies:
+    "@expo/prebuild-config": ^9.0.10
+  peerDependencies:
+    expo: "*"
+  checksum: 4031fc8c6ec289932a5fc26899bf91f0f8bbd590d4d45cd19d9d8b20fc70c9ee49f324674827d81be1f07ffa9ac1690daf29b0b3ddc6c77a4ef59a2fefde1d61
   languageName: node
   linkType: hard
 

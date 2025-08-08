@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native';
+
 export interface Message {
   id: string;
   text: string;
@@ -10,8 +12,8 @@ export interface Message {
 export interface Character {
   id: string;
   name: string;
-  avatar: string;
-  background: string;
+  avatar: ImageSourcePropType;
+  background: ImageSourcePropType;
   description: string;
   fullDescription?: string;
   likes: number;

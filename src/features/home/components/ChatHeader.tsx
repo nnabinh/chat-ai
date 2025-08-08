@@ -13,7 +13,7 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.header, { paddingTop: insets.top + 12 }]}>
+    <View style={{ paddingTop: insets.top || 12 }}>
       <View
         style={[styles.headerContent, { paddingTop: insets.top > 0 ? 0 : 12 }]}
       >
@@ -33,7 +33,6 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
             >
               {currentCharacter?.name || 'Anya Volkov'}
             </Text>
-            <Text style={styles.userStatus}>Online</Text>
           </View>
         </View>
         <View style={styles.headerActions}>
@@ -65,59 +64,47 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
 };
 
 const styles = StyleSheet.create({
-  header: {
-    paddingTop: 0, // Will be set dynamically with safe area
-    paddingHorizontal: 0,
-  },
   headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingBottom: 0,
+    paddingTop: 12,
   },
   userInfo: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
-    marginRight: 20, // Increased margin for more space
-    maxWidth: '70%', // Prevent taking too much space
+    gap: 8,
   },
   avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    marginRight: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 37,
   },
   userDetails: {
-    flex: 1,
-    minWidth: 0, // Allows text to truncate if needed
-    justifyContent: 'center', // Vertically center the text content
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   userName: {
     fontFamily: 'ABC Favorit Unlicensed Trial',
     fontWeight: '600',
-    fontSize: 16,
-    lineHeight: 22,
-    color: '#E2E9ED',
-    marginBottom: 1, // Reduced margin for better centering
-  },
-  userStatus: {
-    fontFamily: 'ABC Favorit Unlicensed Trial',
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 20,
-    color: '#8A8A8A',
+    fontSize: 18,
+    lineHeight: 25,
+    color: '#FFFFFF',
   },
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12, // Reduced gap to save space
-    flexShrink: 0, // Prevent shrinking
-    minWidth: 80, // Ensure minimum space for buttons
+    gap: 8,
   },
   actionButton: {
-    padding: 8,
+    width: 36,
+    height: 36,
+    backgroundColor: 'rgba(110, 110, 110, 0.6)',
+    borderRadius: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   statsBadge: {
     flexDirection: 'row',
@@ -128,11 +115,10 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 6,
-    gap: 16,
-    marginLeft: 58, // Avatar width (44) + margin (12) + padding (2)
+    gap: 8,
+    marginLeft: 54,
     marginHorizontal: 14,
-    marginTop: 0,
-    marginBottom: 8, // 8px spacing before ScrollView
+    marginBottom: 8,
     alignSelf: 'flex-start',
   },
   statItem: {

@@ -1,27 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  ImageBackground,
+  ImageSourcePropType,
 } from 'react-native';
-import {
-  PanGestureHandler,
-  PanGestureHandlerGestureEvent,
-} from 'react-native-gesture-handler';
-import Animated, {
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  runOnJS,
-} from 'react-native-reanimated';
+import { LinearGradient } from 'expo-linear-gradient';
 import { SwipeUpIcon, CloseIcon } from './Icons';
 
 interface SwipeOverlayProps {
   visible: boolean;
   onClose: () => void;
-  onSwipeUp?: () => void;
+  backgroundImage?: ImageSourcePropType;
+  autoCloseDelay?: number;
 }
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
@@ -29,60 +23,68 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const SwipeOverlay: React.FC<SwipeOverlayProps> = ({
   visible,
   onClose,
-  onSwipeUp,
+  backgroundImage,
+  autoCloseDelay = 500,
 }) => {
-  const translateY = useSharedValue(0);
+  const onCloseRef = useRef(onClose);
 
-  const gestureHandler =
-    useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-      onStart: (_, context) => {
-        context.startY = translateY.value;
-      },
-      onActive: (event, context) => {
-        translateY.value = context.startY + event.translationY;
-      },
-      onEnd: (event) => {
-        // If swiped up more than 50px, trigger swipe up action or close overlay
-        if (event.translationY < -50) {
-          if (onSwipeUp) {
-            runOnJS(onSwipeUp)();
-          } else {
-            runOnJS(onClose)();
-          }
-        }
-        translateY.value = 0;
-      },
-    });
+  // Keep the ref updated
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
 
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateY: translateY.value }],
-    };
-  });
+  // Auto-close overlay completely after delay
+  useEffect(() => {
+    if (visible && autoCloseDelay > 0) {
+      const timer = setTimeout(() => {
+        onCloseRef.current();
+      }, autoCloseDelay);
+
+      return () => clearTimeout(timer);
+    }
+  }, [visible, autoCloseDelay]);
 
   if (!visible) return null;
 
   return (
-    <PanGestureHandler onGestureEvent={gestureHandler}>
-      <Animated.View style={[styles.overlay, animatedStyle]}>
-        {/* Close Button */}
-        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-          <CloseIcon width={18} height={18} color="#FFFFFF" />
-        </TouchableOpacity>
+    <View style={styles.overlay}>
+      {/* Background with blur effect */}
+      <ImageBackground
+        source={backgroundImage}
+        style={styles.backgroundImage}
+        blurRadius={9}
+      >
+        {/* Top gradient */}
+        <LinearGradient
+          colors={['#09090B', 'rgba(9, 9, 11, 0)']}
+          style={styles.topGradient}
+        />
 
-        {/* Central Swipe Indicator */}
-        <View style={styles.swipeContainer}>
-          <View style={styles.swipeIndicator}>
-            <SwipeUpIcon width={24} height={24} color="#FFFFFF" />
-          </View>
+        {/* Bottom gradient */}
+        <LinearGradient
+          colors={['rgba(9, 9, 11, 0)', '#09090B']}
+          style={styles.bottomGradient}
+        />
+      </ImageBackground>
+
+      {/* Dark overlay */}
+      <View style={styles.darkOverlay} />
+
+      {/* Close Button */}
+      <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+        <CloseIcon width={18} height={18} color="#FFFFFF" />
+      </TouchableOpacity>
+
+      {/* Central Swipe Indicator */}
+      <View style={styles.swipeContainer}>
+        <View style={styles.swipeIndicator}>
+          <SwipeUpIcon width={24} height={24} color="#FFFFFF" />
         </View>
+      </View>
 
-        {/* Text */}
-        <Text style={styles.swipeText}>
-          Swipe to move{'\n'}to the next chat
-        </Text>
-      </Animated.View>
-    </PanGestureHandler>
+      {/* Text */}
+      <Text style={styles.swipeText}>Swipe to move{'\n'}to the next chat</Text>
+    </View>
   );
 };
 
@@ -93,10 +95,36 @@ const styles = StyleSheet.create({
     height: screenHeight,
     left: 0,
     top: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
     zIndex: 1000,
+  },
+  backgroundImage: {
+    position: 'absolute',
+    width: screenWidth + 18, // Slightly wider as per CSS
+    height: screenHeight,
+    left: -9,
+    top: 0,
+  },
+  topGradient: {
+    position: 'absolute',
+    width: screenWidth,
+    height: 234,
+    left: 9,
+    top: 0,
+  },
+  bottomGradient: {
+    position: 'absolute',
+    width: screenWidth,
+    height: 271,
+    left: 9,
+    top: screenHeight - 271,
+  },
+  darkOverlay: {
+    position: 'absolute',
+    width: screenWidth,
+    height: screenHeight,
+    left: 0,
+    top: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
   },
   closeButton: {
     position: 'absolute',

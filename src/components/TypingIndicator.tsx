@@ -1,127 +1,148 @@
-import React, { useEffect, useRef } from 'react';
-import { View, StyleSheet, Animated } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { View, StyleSheet, Animated, StyleProp, ViewStyle } from 'react-native';
 
-const TypingIndicator: React.FC = () => {
+export default function TypingIndicator({
+  style,
+}: {
+  style?: StyleProp<ViewStyle>;
+}) {
   const dot1 = useRef(new Animated.Value(0)).current;
   const dot2 = useRef(new Animated.Value(0)).current;
   const dot3 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const animateDot = (dot: Animated.Value, delay: number) => {
-      return Animated.loop(
+    const animateDots = () => {
+      const duration = 600;
+      const delay = 200;
+
+      Animated.loop(
         Animated.sequence([
-          Animated.delay(delay),
-          Animated.timing(dot, {
+          Animated.timing(dot1, {
             toValue: 1,
-            duration: 400,
+            duration: duration,
             useNativeDriver: true,
           }),
-          Animated.timing(dot, {
+          Animated.timing(dot1, {
             toValue: 0,
-            duration: 400,
+            duration: duration,
             useNativeDriver: true,
           }),
         ])
-      );
+      ).start();
+
+      setTimeout(() => {
+        Animated.loop(
+          Animated.sequence([
+            Animated.timing(dot2, {
+              toValue: 1,
+              duration: duration,
+              useNativeDriver: true,
+            }),
+            Animated.timing(dot2, {
+              toValue: 0,
+              duration: duration,
+              useNativeDriver: true,
+            }),
+          ])
+        ).start();
+      }, delay);
+
+      setTimeout(() => {
+        Animated.loop(
+          Animated.sequence([
+            Animated.timing(dot3, {
+              toValue: 1,
+              duration: duration,
+              useNativeDriver: true,
+            }),
+            Animated.timing(dot3, {
+              toValue: 0,
+              duration: duration,
+              useNativeDriver: true,
+            }),
+          ])
+        ).start();
+      }, delay * 2);
     };
 
-    const animation1 = animateDot(dot1, 0);
-    const animation2 = animateDot(dot2, 200);
-    const animation3 = animateDot(dot3, 400);
-
-    animation1.start();
-    animation2.start();
-    animation3.start();
-
-    return () => {
-      animation1.stop();
-      animation2.stop();
-      animation3.stop();
-    };
+    animateDots();
   }, [dot1, dot2, dot3]);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.bubble}>
-        <View style={styles.dotsContainer}>
-          <Animated.View
-            style={[
-              styles.dot,
-              {
-                opacity: dot1,
-                transform: [
-                  {
-                    scale: dot1.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.2],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-          <Animated.View
-            style={[
-              styles.dot,
-              {
-                opacity: dot2,
-                transform: [
-                  {
-                    scale: dot2.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.2],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-          <Animated.View
-            style={[
-              styles.dot,
-              {
-                opacity: dot3,
-                transform: [
-                  {
-                    scale: dot3.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [1, 1.2],
-                    }),
-                  },
-                ],
-              },
-            ]}
-          />
-        </View>
+    <View style={[styles.typingContainer, style]}>
+      <View style={styles.typingBubble}>
+        <Animated.View
+          style={[
+            styles.typingDot,
+            styles.dot1,
+            {
+              opacity: dot1.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.3, 1],
+              }),
+            },
+          ]}
+        />
+        <Animated.View
+          style={[
+            styles.typingDot,
+            styles.dot2,
+            {
+              opacity: dot2.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.3, 1],
+              }),
+            },
+          ]}
+        />
+        <Animated.View
+          style={[
+            styles.typingDot,
+            styles.dot3,
+            {
+              opacity: dot3.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0.3, 1],
+              }),
+            },
+          ]}
+        />
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'flex-start',
-    marginVertical: 4,
-    paddingHorizontal: 14,
+  typingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 10,
+    marginLeft: -10,
+    marginBottom: 16,
   },
-  bubble: {
-    backgroundColor: '#D6D6DC',
-    borderRadius: 12,
-    borderTopLeftRadius: 4,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-  },
-  dotsContainer: {
+  typingBubble: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
+    width: 60,
+    height: 32,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 40,
+    gap: 6,
   },
-  dot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#09090B',
-    marginHorizontal: 2,
+  typingDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  dot1: {
+    backgroundColor: '#FFFFFF',
+  },
+  dot2: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  dot3: {
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
 });
-
-export default TypingIndicator;

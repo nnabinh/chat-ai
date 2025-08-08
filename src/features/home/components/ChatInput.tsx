@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Keyboard,
 } from 'react-native';
-import { BlurView } from 'expo-blur';
 import { useDispatch } from 'react-redux';
 import { addMessage, setTyping } from '../chatSlice';
 import { useSendMessageMutation } from '../api';
@@ -46,7 +45,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onFocus, onBlur, onSend }) => {
       try {
         // Send message to API and get response
         const response = await sendMessage({
-          message: currentMessage,
+          text: currentMessage,
           characterId: '1',
         }).unwrap();
 
@@ -108,7 +107,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#6E6E6E99',
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 12,
     minHeight: 48,
   },
   textInput: {

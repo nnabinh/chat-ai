@@ -1,133 +1,98 @@
-# Chat AI - React Native App
+# Chat AI
 
-A modern chat application built with React Native and Expo, featuring AI character interactions, infinite scroll, and beautiful UI design.
+A TikTok-style character switching chat application built with React Native and Expo. Experience seamless conversations with AI characters through intuitive swipe gestures.
+
+## 🎥 Demo
+
+https://github.com/user-attachments/assets/7df4b098-a1b9-49a4-a36e-094f650fce38
+
+## Installation
+
+```bash
+git clone <repository-url>
+cd chat-ai
+yarn install
+yarn start
+```
+
+## How the Current Chat Works
+
+### Character Switching
+
+- **Swipe Up**: Switch between Anya and Mika characters
+- **State Reset**: Chat history and UI state reset when switching characters
+- **Always Active**: Swipe functionality available throughout the chat experience
+
+### Swipe Zone Implementation
+
+- **Fixed Height**: 300dp transparent swipe area positioned below the chat header
+- **Overlay Positioning**: Sits on top of chat content (invisible)
+- **UX Limitation**: Long press on messages within this area won't trigger message actions
+
+### Design Trade-offs
+
+The nature of a chat app is fundamentally different from TikTok Live, and we can't simply leverage the same swiping behavior without careful consideration:
+
+**TikTok Live**:
+
+- Primary content is video (upper half screen)
+- Chat is secondary (bottom overlay)
+- Clear separation between swipe area and content
+- Users expect to swipe through video content
+
+**Current Chat App**:
+
+- Chat messages are the primary content
+- Full message list needs to be displayed and accessible
+- Swipe zone overlays essential chat content
+- Creates interaction conflicts in the overlay area
+- Users expect full message interaction (long press, selection, etc.)
+
+> **Note**: This current implementation is for demo purposes. The swipe zone positioning and interaction model needs further discussion with UX/design team to optimize the user experience while maintaining full chat functionality.
+
+### Other Features
+
+- **Keyboard Dismissal**: Tap anywhere on screen elements (header, messages, description) to dismiss keyboard
+- **Message Actions**: Long press messages (outside swipe zone) for copy, edit, delete options
+- **Expandable Descriptions**: Tap "Read More" to expand character descriptions
+- **Typing Indicators**: Visual feedback when AI is responding
+
+---
 
 ## Features
 
-- ✅ **Modern UI Design**: Beautiful chat interface with blur effects and gradients
-- ✅ **Chat Functionality**: Real-time messaging with typing indicators
-- ✅ **Message Interactions**: Long press to copy, edit, or delete messages
-- ✅ **Infinite Scroll**: TikTok-style vertical scrolling through character profiles
-- ✅ **Redux State Management**: Using Redux Toolkit and RTK Query
-- ✅ **TypeScript Support**: Fully typed codebase
-- ✅ **Navigation**: React Navigation with bottom tabs
-- ✅ **Code Quality**: ESLint, Prettier, and lint-staged configuration
+- 🔄 **TikTok-style Character Switching**: Swipe up to switch between characters
+- 💬 **Real-time Chat Interface**: Smooth messaging experience with typing indicators
+- 🎨 **Dynamic Backgrounds**: Character-specific background images
+- 📱 **Mobile-First Design**: Optimized for mobile devices with gesture controls
+- ⌨️ **Smart Keyboard Handling**: Automatic keyboard dismissal and content adjustment
+- 🎭 **Character Personalities**: Unique AI personalities with custom greetings and responses
+- 📝 **Message Management**: Long-press for copy, edit, and delete functionality
+- 🔍 **Expandable Content**: Collapsible character descriptions with "Read More"
 
 ## Tech Stack
 
 - **Framework**: React Native with Expo
-- **Language**: TypeScript
-- **State Management**: Redux Toolkit + RTK Query
-- **Navigation**: React Navigation v6
-- **UI Components**: Custom components with Expo Blur and Linear Gradient
-- **Icons**: Custom SVG icons
-- **Code Quality**: ESLint + Prettier + lint-staged
+- **State Management**: Redux Toolkit with RTK Query
+- **Navigation**: React Navigation (Bottom Tabs)
+- **Gestures**: React Native Reanimated & Gesture Handler
+- **Styling**: StyleSheet with custom components
+- **Icons**: React Native SVG
+- **Type Safety**: TypeScript throughout
 
 ## Project Structure
 
 ```
 src/
-├── components/          # Reusable UI components
-│   ├── ChatInput.tsx
-│   ├── CharacterCard.tsx
-│   ├── Icons.tsx
-│   ├── MessageBubble.tsx
-│   └── TypingIndicator.tsx
-├── navigation/          # Navigation configuration
-│   └── BottomTabNavigator.tsx
-├── screens/            # Screen components
-│   ├── HomeScreen.tsx
-│   ├── SearchScreen.tsx
-│   ├── CreateScreen.tsx
-│   ├── MessagesScreen.tsx
-│   └── ProfileScreen.tsx
-├── store/              # Redux store configuration
-│   ├── api.ts
-│   ├── chatSlice.ts
-│   └── index.ts
-└── types/              # TypeScript type definitions
-    └── index.ts
+├── features/
+│   └── home/
+│       ├── api.ts              # Character data & API endpoints
+│       ├── chatSlice.ts        # Chat state management
+│       ├── components/         # Feature-specific components
+│       ├── hooks/              # Custom hooks
+│       └── screens/            # Screen components
+├── components/                 # Shared UI components
+├── navigation/                 # App navigation setup
+├── types/                      # TypeScript definitions
+└── utils/                      # Helper functions
 ```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18.18+ recommended)
-- Yarn (v3.6+ recommended)
-- Expo CLI
-- iOS Simulator or Android Emulator (or physical device)
-
-### Installation
-
-1. Clone the repository:
-   ```bash
-   git clone git@github.com:nnabinh/chat-ai.git
-   cd chat-ai
-   ```
-
-2. Install dependencies:
-   ```bash
-   yarn install
-   ```
-
-3. Start the development server:
-   ```bash
-   yarn start
-   ```
-
-4. Run on your preferred platform:
-   ```bash
-   yarn ios      # iOS Simulator
-   yarn android  # Android Emulator
-   yarn web      # Web browser
-   ```
-
-## Key Features Explained
-
-### 1. Chat Interface
-- Real-time messaging with AI characters
-- Typing indicators during AI response
-- Message bubbles with different styles for user/AI messages
-- Smooth animations and transitions
-
-### 2. Long Press Message Actions
-- **Copy**: Copy message text to clipboard
-- **Edit**: Edit your own messages inline
-- **Delete**: Remove messages with confirmation
-- Only available for user messages
-
-### 3. Infinite Scroll Character Discovery
-- TikTok-style vertical scrolling
-- Full-screen character cards with background images
-- Pagination with loading states
-- Smooth performance with optimized rendering
-
-### 4. Redux State Management
-- Centralized state management with Redux Toolkit
-- RTK Query for API calls and caching
-- Type-safe actions and reducers
-
-## Development Scripts
-
-```bash
-yarn start          # Start Expo development server
-yarn ios            # Run on iOS simulator
-yarn android        # Run on Android emulator
-yarn web            # Run in web browser
-yarn lint           # Run ESLint
-yarn lint:fix       # Fix ESLint issues
-yarn format         # Format code with Prettier
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Run linting and formatting
-5. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License.

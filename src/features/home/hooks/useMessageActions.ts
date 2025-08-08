@@ -14,7 +14,7 @@ export const useMessageActions = () => {
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [editingText, setEditingText] = useState('');
 
-  const handleLongPress = (message: any) => {
+  const handleLongPress = (message: Message) => {
     setSelectedMessage({
       id: message.id,
       text: message.text,
