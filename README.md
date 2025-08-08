@@ -15,6 +15,10 @@ yarn install
 yarn start
 ```
 
+1. Download **Expo Go** from the App Store (iOS) or Google Play Store (Android)
+2. Scan the QR code displayed in your terminal with the Expo Go app
+3. The app will load on your device
+
 ## How the Current Chat Works
 
 ### Character Switching
