@@ -4,7 +4,7 @@ import { Message, Character, ChatState } from '../types';
 const mockCharacter: Character = {
   id: '1',
   name: 'Anya Volkov',
-  avatar: require('../../assets/images/avatar.jpg'),
+  avatar: require('../../assets/images/anya-avatar.png'),
   description:
     "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
   likes: 1200,

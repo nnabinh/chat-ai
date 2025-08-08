@@ -6,7 +6,7 @@ const mockCharacters: Character[] = [
   {
     id: '1',
     name: 'Anya Volkov',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
     likes: 1200,
@@ -17,7 +17,7 @@ const mockCharacters: Character[] = [
   {
     id: '2',
     name: 'Elena Nightshade',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A mysterious sorceress who dwells in the shadows, Elena possesses ancient knowledge of dark magic and forbidden spells. Her powers are feared across the realm...',
     likes: 850,
@@ -27,7 +27,7 @@ const mockCharacters: Character[] = [
   {
     id: '3',
     name: 'Captain Rex',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A seasoned space marine with years of combat experience across the galaxy. Rex has seen it all and survived the impossible...',
     likes: 2100,
@@ -37,7 +37,7 @@ const mockCharacters: Character[] = [
   {
     id: '4',
     name: 'Luna Starweaver',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'An ethereal being from the celestial realm, Luna weaves dreams and starlight into reality. Her gentle nature hides immense cosmic power...',
     likes: 3400,
@@ -47,7 +47,7 @@ const mockCharacters: Character[] = [
   {
     id: '5',
     name: 'Kai Shadowblade',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A master assassin turned protector, Kai walks the line between light and darkness. His past haunts him, but his resolve remains unshaken...',
     likes: 1800,
@@ -58,7 +58,7 @@ const mockCharacters: Character[] = [
   {
     id: '6',
     name: 'Dr. Aria Chen',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A brilliant scientist specializing in quantum physics and interdimensional research. Her discoveries have opened doorways to other realities...',
     likes: 920,
@@ -69,7 +69,7 @@ const mockCharacters: Character[] = [
   {
     id: '7',
     name: 'Zara the Wanderer',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A nomadic adventurer who has traveled through countless worlds and dimensions. Each journey teaches her something new about existence itself...',
     likes: 2750,
@@ -80,7 +80,7 @@ const mockCharacters: Character[] = [
   {
     id: '8',
     name: 'Prince Aldric',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       "The rightful heir to a kingdom lost in time, Aldric carries the weight of his people's hopes. His noble heart burns with the desire for justice...",
     likes: 1650,
@@ -90,7 +90,7 @@ const mockCharacters: Character[] = [
   {
     id: '9',
     name: 'Raven Blackheart',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'A pirate captain who rules the seven seas with an iron fist and a cunning mind. Her ship is her kingdom, and her crew is her family...',
     likes: 2200,
@@ -100,7 +100,7 @@ const mockCharacters: Character[] = [
   {
     id: '10',
     name: 'Sage Moonwhisper',
-    avatar: require('../../assets/images/avatar.jpg'),
+    avatar: require('../../assets/images/anya-avatar.png'),
     description:
       'An ancient druid who communes with nature itself. The forest spirits speak through her, sharing wisdom from ages past...',
     likes: 1100,
@@ -111,7 +111,7 @@ const mockCharacters: Character[] = [
   {
     id: '11',
     name: 'Mika Kobuyashi',
-    avatar: require('../../assets/images/mika-avatar.jpg'),
+    avatar: require('../../assets/images/mika-avatar.png'),
     description:
       "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
     likes: 1200,

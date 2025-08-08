@@ -45,7 +45,7 @@ const HomeScreen: React.FC = () => {
   const mikaCharacter = {
     id: '11',
     name: 'Mika Kobuyashi',
-    avatar: require('../../assets/images/mika-avatar.jpg'),
+    avatar: require('../../assets/images/mika-avatar.png'),
     description:
       "Shin Lewis is a quiet, introverted soul who'd rather stay in his cozy apartment with his sketches than deal with the outside world. He's the type... Read More",
     likes: 1200,
@@ -91,7 +91,7 @@ const HomeScreen: React.FC = () => {
       <ImageBackground
         source={
           currentCharacter?.avatar ||
-          require('../../assets/images/background.jpg')
+          require('../../assets/images/anya-background.png')
         }
         style={styles.backgroundImage}
         blurRadius={9}
@@ -117,7 +117,7 @@ const HomeScreen: React.FC = () => {
                   <Image
                     source={
                       currentCharacter?.avatar ||
-                      require('../../assets/images/avatar.jpg')
+                      require('../../assets/images/anya-avatar.png')
                     }
                     style={styles.avatar}
                   />
