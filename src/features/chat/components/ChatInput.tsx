@@ -77,7 +77,7 @@ const ChatInput: React.FC = () => {
           style={[styles.sendButton, { opacity: message.trim() ? 1 : 0.5 }]}
           disabled={!message.trim()}
         >
-          <SendIcon />
+          <SendIcon width={16} height={16} />
         </TouchableOpacity>
       </BlurView>
     </View>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(110, 110, 110, 0.6)',
+    backgroundColor: '#6E6E6E99',
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: 12,
@@ -110,9 +110,12 @@ const styles = StyleSheet.create({
   sendButton: {
     width: 24,
     height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(70, 70, 70, 0.8)',
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
+    padding: 4,
   },
 });
 

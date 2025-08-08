@@ -1,11 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet } from 'react-native';
-import HomeScreen from '../screens/HomeScreen';
-import SearchScreen from '../screens/SearchScreen';
-import CreateScreen from '../screens/CreateScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import { View, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import HomeScreen from '../features/home/screens/HomeScreen';
+import SearchScreen from '../features/search/screens/SearchScreen';
+import CreateScreen from '../features/create/screens/CreateScreen';
+import MessagesScreen from '../features/messages/screens/MessagesScreen';
+import ProfileScreen from '../features/profile/screens/ProfileScreen';
 import {
   HomeIcon,
   SearchIcon,
@@ -16,22 +17,38 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-const TabLabel: React.FC<{ focused: boolean; title: string }> = ({
-  focused,
-  title,
-}) => (
-  <Text style={[styles.tabLabel, { color: focused ? '#F43F3F' : '#AFAFAF' }]}>
-    {title}
-  </Text>
-);
+// Default tab bar height from Figma design
+const TAB_BAR_HEIGHT = 56;
 
 const BottomTabNavigator: React.FC = () => {
+  const insets = useSafeAreaInsets();
+
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: styles.tabBar,
-        tabBarBackground: () => <View style={styles.tabBarBackground} />,
+        tabBarStyle: [
+          styles.tabBar,
+          {
+            height: TAB_BAR_HEIGHT + insets.bottom,
+            paddingBottom: insets.bottom,
+          },
+        ],
+        tabBarItemStyle: styles.tabBarItem,
+        tabBarLabelStyle: styles.tabBarLabel,
+        tabBarActiveTintColor: '#F43F3F',
+        tabBarInactiveTintColor: '#AFAFAF',
+        tabBarBackground: () => (
+          <View
+            style={[
+              styles.tabBarBackground,
+              {
+                height: TAB_BAR_HEIGHT + insets.bottom,
+                paddingBottom: insets.bottom,
+              },
+            ]}
+          />
+        ),
       }}
     >
       <Tab.Screen
@@ -41,9 +58,7 @@ const BottomTabNavigator: React.FC = () => {
           tabBarIcon: ({ focused }) => (
             <HomeIcon color={focused ? '#F43F3F' : '#AFAFAF'} />
           ),
-          tabBarLabel: ({ focused }) => (
-            <TabLabel focused={focused} title="Home" />
-          ),
+          tabBarLabel: 'Home',
         }}
       />
       <Tab.Screen
@@ -53,9 +68,7 @@ const BottomTabNavigator: React.FC = () => {
           tabBarIcon: ({ focused }) => (
             <SearchIcon color={focused ? '#F43F3F' : '#AFAFAF'} />
           ),
-          tabBarLabel: ({ focused }) => (
-            <TabLabel focused={focused} title="Search" />
-          ),
+          tabBarLabel: 'Search',
         }}
       />
       <Tab.Screen
@@ -65,9 +78,7 @@ const BottomTabNavigator: React.FC = () => {
           tabBarIcon: ({ focused }) => (
             <CreateIcon color={focused ? '#F43F3F' : '#AFAFAF'} />
           ),
-          tabBarLabel: ({ focused }) => (
-            <TabLabel focused={focused} title="Create" />
-          ),
+          tabBarLabel: 'Create',
         }}
       />
       <Tab.Screen
@@ -77,9 +88,7 @@ const BottomTabNavigator: React.FC = () => {
           tabBarIcon: ({ focused }) => (
             <MessagesIcon color={focused ? '#F43F3F' : '#AFAFAF'} />
           ),
-          tabBarLabel: ({ focused }) => (
-            <TabLabel focused={focused} title="Messages" />
-          ),
+          tabBarLabel: 'Messages',
         }}
       />
       <Tab.Screen
@@ -89,9 +98,7 @@ const BottomTabNavigator: React.FC = () => {
           tabBarIcon: ({ focused }) => (
             <ProfileIcon color={focused ? '#F43F3F' : '#AFAFAF'} />
           ),
-          tabBarLabel: ({ focused }) => (
-            <TabLabel focused={focused} title="Profile" />
-          ),
+          tabBarLabel: 'Profile',
         }}
       />
     </Tab.Navigator>
@@ -104,20 +111,29 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: 56,
+    height: TAB_BAR_HEIGHT,
     backgroundColor: 'transparent',
     borderTopWidth: 0,
     elevation: 0,
     shadowOpacity: 0,
+    paddingHorizontal: 8,
   },
   tabBarBackground: {
     flex: 1,
-    backgroundColor: '#09090B',
+    backgroundColor: 'transparent',
   },
-  tabLabel: {
+  tabBarItem: {
+    paddingTop: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 0,
+    gap: 7,
+  },
+  tabBarLabel: {
+    fontFamily: 'ABC Favorit Unlicensed Trial',
     fontSize: 12,
     fontWeight: '400',
-    marginTop: 4,
+    textAlign: 'center',
   },
 });
 

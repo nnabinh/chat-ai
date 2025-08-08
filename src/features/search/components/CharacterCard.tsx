@@ -28,7 +28,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {/* Background Image */}
       <Image
-        source={character.avatar}
+        source={character.background}
         style={styles.backgroundImage}
         resizeMode="cover"
       />

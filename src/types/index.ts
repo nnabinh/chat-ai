@@ -10,7 +10,9 @@ export interface Character {
   id: string;
   name: string;
   avatar: string;
+  background: string;
   description: string;
+  fullDescription?: string;
   likes: number;
   messages: number;
   greeting: string;

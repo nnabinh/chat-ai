@@ -195,11 +195,20 @@ export const PhoneIcon: React.FC<IconProps> = ({
   color = '#E2E9ED',
 }) => (
   <Svg width={width} height={height} viewBox="0 0 16 16" fill="none">
-    <Path
-      d="M2 2.5C2 2.22386 2.22386 2 2.5 2H4.5C4.77614 2 5 2.22386 5 2.5V4.5C5 4.77614 4.77614 5 4.5 5H2.5C2.22386 5 2 4.77614 2 4.5V2.5Z"
-      stroke={color}
-      strokeWidth="1.5"
-    />
+    <G clipPath="url(#clip0_1_236)">
+      <Path
+        d="M9.22133 11.0453C9.35901 11.1085 9.51413 11.1229 9.66112 11.0862C9.80812 11.0495 9.93822 10.9638 10.03 10.8433L10.2667 10.5333C10.3909 10.3677 10.5519 10.2333 10.737 10.1407C10.9222 10.0481 11.1263 9.99992 11.3333 9.99992H13.3333C13.6869 9.99992 14.0261 10.1404 14.2761 10.3904C14.5262 10.6405 14.6667 10.9796 14.6667 11.3333V13.3333C14.6667 13.6869 14.5262 14.026 14.2761 14.2761C14.0261 14.5261 13.6869 14.6666 13.3333 14.6666C10.1507 14.6666 7.09848 13.4023 4.84805 11.1519C2.59761 8.90143 1.33333 5.84918 1.33333 2.66659C1.33333 2.31296 1.4738 1.97382 1.72385 1.72378C1.9739 1.47373 2.31304 1.33325 2.66666 1.33325H4.66666C5.02028 1.33325 5.35942 1.47373 5.60947 1.72378C5.85952 1.97382 5.99999 2.31296 5.99999 2.66659V4.66659C5.99999 4.87358 5.9518 5.07773 5.85923 5.26287C5.76666 5.44801 5.63226 5.60906 5.46666 5.73325L5.15466 5.96725C5.03227 6.0607 4.94601 6.19364 4.91052 6.34349C4.87504 6.49333 4.89252 6.65084 4.95999 6.78925C5.87112 8.63983 7.36961 10.1364 9.22133 11.0453Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </G>
+    <Defs>
+      <ClipPath id="clip0_1_236">
+        <Rect width="16" height="16" fill="white" />
+      </ClipPath>
+    </Defs>
   </Svg>
 );
 
@@ -209,9 +218,27 @@ export const MenuIcon: React.FC<IconProps> = ({
   color = '#E2E9ED',
 }) => (
   <Svg width={width} height={height} viewBox="0 0 18 18" fill="none">
-    <Path d="M2.25 9H15.75" stroke={color} strokeWidth="1.5" />
-    <Path d="M2.25 13.5H15.75" stroke={color} strokeWidth="1.5" />
-    <Path d="M2.25 4.5H15.75" stroke={color} strokeWidth="1.5" />
+    <Path
+      d="M2.25 9H15.75"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M2.25 13.5H15.75"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M2.25 4.5H15.75"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </Svg>
 );
 
