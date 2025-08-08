@@ -214,3 +214,49 @@ export const MenuIcon: React.FC<IconProps> = ({
     <Path d="M2.25 4.5H15.75" stroke={color} strokeWidth="1.5" />
   </Svg>
 );
+
+export const SwipeUpIcon: React.FC<IconProps> = ({
+  width = 24,
+  height = 24,
+  color = '#FFFFFF',
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M17 11L12 6L7 11"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M17 18L12 13L7 18"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const CloseIcon: React.FC<IconProps> = ({
+  width = 18,
+  height = 18,
+  color = '#FFFFFF',
+}) => (
+  <Svg width={width} height={height} viewBox="0 0 18 18" fill="none">
+    <Path
+      d="M13.5 4.5L4.5 13.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M4.5 4.5L13.5 13.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

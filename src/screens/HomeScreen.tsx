@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,12 +16,20 @@ import { RootState } from '../store';
 import MessageBubble from '../components/MessageBubble';
 import TypingIndicator from '../components/TypingIndicator';
 import ChatInput from '../components/ChatInput';
+import SwipeOverlay from '../components/SwipeOverlay';
 import { HeartIcon, ChatIcon, PhoneIcon, MenuIcon } from '../components/Icons';
 
 const HomeScreen: React.FC = () => {
   const { messages, isTyping, currentCharacter } = useSelector(
     (state: RootState) => state.chat
   );
+
+  // State for swipe overlay - show on first render
+  const [showSwipeOverlay, setShowSwipeOverlay] = useState(true);
+
+  const handleCloseOverlay = () => {
+    setShowSwipeOverlay(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -101,6 +109,9 @@ const HomeScreen: React.FC = () => {
         {/* Chat Input */}
         <ChatInput />
       </SafeAreaView>
+
+      {/* Swipe Overlay */}
+      <SwipeOverlay visible={showSwipeOverlay} onClose={handleCloseOverlay} />
     </View>
   );
 };
