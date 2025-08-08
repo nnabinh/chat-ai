@@ -11,6 +11,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
 import { Character } from '../../../types';
 import { HeartIcon, ChatIcon } from '@components/Icons';
+import { formatNumber } from '@utils';
 
 interface CharacterCardProps {
   character: Character;
@@ -57,17 +58,13 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
             <View style={styles.stat}>
               <HeartIcon />
               <Text style={styles.statText}>
-                {character.likes > 1000
-                  ? `${(character.likes / 1000).toFixed(1)}k`
-                  : character.likes}
+                {formatNumber(character.likes)}
               </Text>
             </View>
             <View style={styles.stat}>
               <ChatIcon />
               <Text style={styles.statText}>
-                {character.messages > 1000
-                  ? `${(character.messages / 1000).toFixed(1)}k`
-                  : character.messages}
+                {formatNumber(character.messages)}
               </Text>
             </View>
           </BlurView>

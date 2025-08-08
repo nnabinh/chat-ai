@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { HeartIcon, ChatIcon, PhoneIcon, MenuIcon } from '@components/Icons';
+import { formatNumber } from '@utils';
 import { Character } from '../../../types';
 
 interface ChatHeaderProps {
@@ -48,12 +49,14 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
       <View style={styles.statsBadge}>
         <View style={styles.statItem}>
           <HeartIcon width={12} height={12} />
-          <Text style={styles.statText}>{currentCharacter?.likes || 1200}</Text>
+          <Text style={styles.statText}>
+            {formatNumber(currentCharacter?.likes || 1200)}
+          </Text>
         </View>
         <View style={styles.statItem}>
           <ChatIcon width={12} height={12} />
           <Text style={styles.statText}>
-            {currentCharacter?.messages || 34200}
+            {formatNumber(currentCharacter?.messages || 34200)}
           </Text>
         </View>
       </View>

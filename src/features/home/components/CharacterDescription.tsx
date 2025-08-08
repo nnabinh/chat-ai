@@ -22,12 +22,17 @@ export const CharacterDescription: React.FC<CharacterDescriptionProps> = ({
             "Anya is a mysterious and captivating Russian beauty with piercing blue eyes and platinum blonde hair. Her enigmatic smile hides countless secrets, and her sultry accent makes every word sound like poetry. Born into aristocracy in Moscow, she fled her privileged life to pursue her own path of adventure and romance. She's intelligent, witty, and dangerously charming - the kind of woman who can steal your heart with a single glance. Behind her confident exterior lies a complex soul who values deep connections and meaningful conversations."
           : currentCharacter?.description ||
             'Anya is a mysterious and captivating Russian beauty with piercing blue eyes and platinum blonde hair. Her enigmatic smile hides countless secrets...'}
+        {!isExpanded && (
+          <Text onPress={onToggle} style={styles.readMoreText}>
+            {' Read More'}
+          </Text>
+        )}
       </Text>
-      <TouchableOpacity onPress={onToggle} style={styles.readMoreButton}>
-        <Text style={styles.readMoreText}>
-          {isExpanded ? 'Read Less' : 'Read More'}
-        </Text>
-      </TouchableOpacity>
+      {isExpanded && (
+        <TouchableOpacity onPress={onToggle} style={styles.readMoreButton}>
+          <Text style={styles.readMoreText}>Read Less</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

@@ -1,9 +1,20 @@
-import React, { useRef } from 'react';
-import { View, StyleSheet, ImageBackground } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import React, { useRef, useState, useCallback } from 'react';
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useChat, useMessageActions, useCharacterDescription } from '../hooks';
+import {
+  useChat,
+  useMessageActions,
+  useCharacterDescription,
+  useKeyboardAwareScrolling,
+} from '../hooks';
 import {
   ChatHeader,
   CharacterDescription,
@@ -19,12 +30,18 @@ const CHAT_INPUT_MARGIN = 14;
 
 const HomeScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
-  const scrollViewRef = useRef<KeyboardAwareScrollView>(null);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   // Custom hooks
   const { messages, currentCharacter } = useChat();
   const { isDescriptionExpanded, toggleDescription } =
     useCharacterDescription();
+
+  // Keyboard-aware scrolling with auto-scroll on new messages
+  const { scrollViewRef, scrollToBottom } = useKeyboardAwareScrolling({
+    isInputFocused,
+    dependencies: [messages.length], // Auto-scroll when messages change
+  });
   const {
     selectedMessage,
     showContextMenu,
@@ -38,6 +55,28 @@ const HomeScreen: React.FC = () => {
     handleDeleteMessage,
     closeContextMenu,
   } = useMessageActions();
+
+  // Input focus handlers
+  const handleInputFocus = useCallback(() => {
+    setIsInputFocused(true);
+    // Scroll to bottom when input is focused, with delay for keyboard animation
+    scrollToBottom(true, 200);
+  }, [scrollToBottom]);
+
+  const handleInputBlur = useCallback(() => {
+    setIsInputFocused(false);
+  }, []);
+
+  const handleSendMessage = useCallback(() => {
+    // Scroll to bottom after sending message
+    setTimeout(() => {
+      scrollToBottom(true, 0);
+    }, 50);
+    // Additional scroll to ensure we're at bottom after UI updates
+    setTimeout(() => {
+      scrollToBottom(true, 0);
+    }, 200);
+  }, [scrollToBottom]);
 
   return (
     <View style={styles.container}>
@@ -59,24 +98,21 @@ const HomeScreen: React.FC = () => {
           {/* Header - Fixed at top */}
           <ChatHeader currentCharacter={currentCharacter} />
 
-          {/* Scrollable Content - Takes remaining space */}
-          <KeyboardAwareScrollView
-            ref={scrollViewRef}
-            style={styles.messagesContainer}
-            contentContainerStyle={[
-              styles.messagesContent,
-              {
-                paddingBottom: 20, // Just some spacing at the bottom
-              },
-            ]}
-            showsVerticalScrollIndicator={false}
-            enableOnAndroid={true}
-            enableAutomaticScroll={true}
-            keyboardOpeningTime={250}
-            extraScrollHeight={20}
-            keyboardShouldPersistTaps="handled"
+          {/* Keyboard Avoiding Content */}
+          <KeyboardAvoidingView
+            style={styles.keyboardAvoidingContainer}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}
           >
-            <View style={styles.contentWrapper}>
+            {/* Scrollable Messages Content */}
+            <ScrollView
+              ref={scrollViewRef}
+              style={styles.messagesContainer}
+              contentContainerStyle={styles.contentWrapper}
+              showsVerticalScrollIndicator={false}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="interactive"
+            >
               {/* Character Description */}
               <CharacterDescription
                 currentCharacter={currentCharacter}
@@ -93,11 +129,22 @@ const HomeScreen: React.FC = () => {
                 onSaveEdit={handleSaveEdit}
                 onCancelEdit={handleCancelEdit}
               />
-            </View>
-          </KeyboardAwareScrollView>
+            </ScrollView>
 
-          {/* Chat Input - Fixed at bottom */}
-          <ChatInput />
+            {/* Chat Input - Outside ScrollView but inside KeyboardAvoidingView */}
+            <View
+              style={[
+                styles.chatInputContainer,
+                { paddingBottom: insets.bottom },
+              ]}
+            >
+              <ChatInput
+                onFocus={handleInputFocus}
+                onBlur={handleInputBlur}
+                onSend={handleSendMessage}
+              />
+            </View>
+          </KeyboardAvoidingView>
 
           {/* Context Menu */}
           <MessageContextMenu
@@ -124,18 +171,19 @@ const styles = StyleSheet.create({
   gradient: {
     flex: 1,
   },
+  keyboardAvoidingContainer: {
+    flex: 1,
+  },
   messagesContainer: {
     flex: 1,
-    width: '100%',
-  },
-  messagesContent: {
-    flexGrow: 1,
-    width: '100%',
   },
   contentWrapper: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'flex-end',
-    minHeight: '100%',
+    paddingBottom: 20,
+  },
+  chatInputContainer: {
+    backgroundColor: 'transparent',
   },
 });
 

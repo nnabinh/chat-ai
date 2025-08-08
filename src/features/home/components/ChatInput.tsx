@@ -12,7 +12,13 @@ import { addMessage, setTyping } from '../chatSlice';
 import { useSendMessageMutation } from '../api';
 import { SendIcon } from '@components/Icons';
 
-const ChatInput: React.FC = () => {
+interface ChatInputProps {
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onSend?: () => void;
+}
+
+const ChatInput: React.FC<ChatInputProps> = ({ onFocus, onBlur, onSend }) => {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const [sendMessage] = useSendMessageMutation();
@@ -30,6 +36,9 @@ const ChatInput: React.FC = () => {
       const currentMessage = message.trim();
       setMessage('');
       Keyboard.dismiss();
+
+      // Trigger scroll to bottom
+      onSend?.();
 
       // Show typing indicator
       dispatch(setTyping(true));
@@ -73,6 +82,8 @@ const ChatInput: React.FC = () => {
           maxLength={500}
           scrollEnabled={true}
           textAlignVertical="top"
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
         <TouchableOpacity
           onPress={handleSend}
@@ -89,7 +100,7 @@ const ChatInput: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 14,
-    paddingBottom: 14,
+    paddingVertical: 12, // Vertical padding for proper spacing
   },
   inputContainer: {
     flexDirection: 'row',
