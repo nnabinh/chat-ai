@@ -11,26 +11,24 @@ src/
 │   ├── SwipeOverlay.tsx # Global overlay component
 │   └── TypingIndicator.tsx # Global typing indicator
 ├── features/            # Feature-based modules
-│   ├── chat/           # Chat functionality & state management
-│   │   ├── components/ # Chat-specific components
-│   │   │   ├── ChatInput.tsx    # Message input with send button
-│   │   │   └── MessageBubble.tsx # Individual message display
-│   │   ├── api.ts      # Chat API service & character data
-│   │   └── chatSlice.ts # Chat Redux slice & message management
-│   ├── home/           # Main chat screen feature
+│   ├── home/           # Main chat screen feature & messaging
 │   │   ├── screens/    # Home screens
 │   │   │   └── HomeScreen.tsx   # Main refactored home screen
-│   │   ├── components/ # Home-specific components
+│   │   ├── components/ # Home & chat components
 │   │   │   ├── ChatHeader.tsx           # User info, avatar, stats, actions
 │   │   │   ├── CharacterDescription.tsx # Expandable character info
 │   │   │   ├── MessagesList.tsx         # Message rendering with markdown
 │   │   │   ├── MessageContextMenu.tsx   # Long-press context menu
+│   │   │   ├── ChatInput.tsx            # Message input with send button
+│   │   │   ├── MessageBubble.tsx        # Individual message display
 │   │   │   └── index.ts                 # Component exports
-│   │   └── hooks/      # Home-specific custom hooks
-│   │       ├── useChat.ts               # Chat state management
-│   │       ├── useMessageActions.ts     # Message interactions (edit/delete/copy)
-│   │       ├── useCharacterDescription.ts # Description expand/collapse
-│   │       └── index.ts                 # Hook exports
+│   │   ├── hooks/      # Home-specific custom hooks
+│   │   │   ├── useChat.ts               # Chat state management
+│   │   │   ├── useMessageActions.ts     # Message interactions (edit/delete/copy)
+│   │   │   ├── useCharacterDescription.ts # Description expand/collapse
+│   │   │   └── index.ts                 # Hook exports
+│   │   ├── api.ts      # Chat API service & character data
+│   │   └── chatSlice.ts # Chat Redux slice & message management
 │   ├── search/         # Character search & discovery
 │   │   ├── screens/    # Search screens
 │   │   │   └── SearchScreen.tsx
@@ -69,9 +67,9 @@ src/
 
 ## Core Features & Components
 
-### 🏠 Home Feature (Main Chat Interface)
+### 🏠 Home Feature (Main Chat Interface & Messaging)
 
-The original 600+ line HomeScreen has been refactored into a modular architecture:
+The original 600+ line HomeScreen has been refactored into a modular architecture that includes all chat functionality:
 
 #### **Custom Hooks:**
 
@@ -85,11 +83,11 @@ The original 600+ line HomeScreen has been refactored into a modular architectur
 - **`CharacterDescription`**: Expandable character bio with "Read More" functionality
 - **`MessagesList`**: Message rendering with markdown support (_italic_, **bold**)
 - **`MessageContextMenu`**: Context menu for message actions (Copy, Edit, Delete)
-
-### 💬 Chat Feature (Core Messaging)
-
 - **`ChatInput`**: Message input with send button (24x24px, 4px padding)
 - **`MessageBubble`**: Individual message display component
+
+#### **State Management & API:**
+
 - **`chatSlice`**: Redux state management for messages and characters
 - **`api`**: Character data and API service layer
 
@@ -151,7 +149,7 @@ The original 600+ line HomeScreen has been refactored into a modular architectur
 ## Current Statistics
 
 - **📁 Total TypeScript Files**: 25 files
-- **🏗️ Features**: 5 main features (home, chat, search, create, messages, profile)
+- **🏗️ Features**: 5 main features (home/chat, search, create, messages, profile)
 - **🧩 Components**: 12 specialized components
 - **🎣 Custom Hooks**: 3 feature-specific hooks
 - **📦 Global Components**: 3 reusable components

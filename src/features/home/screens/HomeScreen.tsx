@@ -9,8 +9,8 @@ import {
   CharacterDescription,
   MessagesList,
   MessageContextMenu,
+  ChatInput,
 } from '../components';
-import ChatInput from '../../chat/components/ChatInput';
 
 // Constants for layout calculations
 const TAB_BAR_HEIGHT = 56;
@@ -20,10 +20,11 @@ const CHAT_INPUT_MARGIN = 14;
 const HomeScreen: React.FC = () => {
   const insets = useSafeAreaInsets();
   const scrollViewRef = useRef<KeyboardAwareScrollView>(null);
-  
+
   // Custom hooks
   const { messages, currentCharacter } = useChat();
-  const { isDescriptionExpanded, toggleDescription } = useCharacterDescription();
+  const { isDescriptionExpanded, toggleDescription } =
+    useCharacterDescription();
   const {
     selectedMessage,
     showContextMenu,
@@ -41,30 +42,31 @@ const HomeScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={currentCharacter?.background || require('../../../../assets/images/anya-background.png')}
+        source={
+          currentCharacter?.background ||
+          require('@assets/images/anya-background.png')
+        }
         style={styles.backgroundImage}
         resizeMode="cover"
       >
         <LinearGradient
           colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.1)', 'rgba(0,0,0,0.3)']}
-          style={styles.gradient}
+          style={[
+            styles.gradient,
+            { paddingBottom: TAB_BAR_HEIGHT + insets.bottom },
+          ]}
         >
-          {/* Header */}
+          {/* Header - Fixed at top */}
           <ChatHeader currentCharacter={currentCharacter} />
 
-          {/* Messages Container */}
+          {/* Scrollable Content - Takes remaining space */}
           <KeyboardAwareScrollView
             ref={scrollViewRef}
             style={styles.messagesContainer}
             contentContainerStyle={[
               styles.messagesContent,
               {
-                paddingBottom:
-                  TAB_BAR_HEIGHT +
-                  CHAT_INPUT_HEIGHT +
-                  CHAT_INPUT_MARGIN +
-                  insets.bottom +
-                  20,
+                paddingBottom: 20, // Just some spacing at the bottom
               },
             ]}
             showsVerticalScrollIndicator={false}
@@ -74,25 +76,27 @@ const HomeScreen: React.FC = () => {
             extraScrollHeight={20}
             keyboardShouldPersistTaps="handled"
           >
-            {/* Character Description */}
-            <CharacterDescription
-              currentCharacter={currentCharacter}
-              isExpanded={isDescriptionExpanded}
-              onToggle={toggleDescription}
-            />
+            <View style={styles.contentWrapper}>
+              {/* Character Description */}
+              <CharacterDescription
+                currentCharacter={currentCharacter}
+                isExpanded={isDescriptionExpanded}
+                onToggle={toggleDescription}
+              />
 
-            {/* Messages */}
-            <MessagesList
-              messages={messages}
-              editingText={editingText}
-              setEditingText={setEditingText}
-              onLongPress={handleLongPress}
-              onSaveEdit={handleSaveEdit}
-              onCancelEdit={handleCancelEdit}
-            />
+              {/* Messages */}
+              <MessagesList
+                messages={messages}
+                editingText={editingText}
+                setEditingText={setEditingText}
+                onLongPress={handleLongPress}
+                onSaveEdit={handleSaveEdit}
+                onCancelEdit={handleCancelEdit}
+              />
+            </View>
           </KeyboardAwareScrollView>
 
-          {/* Chat Input */}
+          {/* Chat Input - Fixed at bottom */}
           <ChatInput />
 
           {/* Context Menu */}
@@ -122,12 +126,16 @@ const styles = StyleSheet.create({
   },
   messagesContainer: {
     flex: 1,
-    marginTop: 120,
     width: '100%',
   },
   messagesContent: {
     flexGrow: 1,
     width: '100%',
+  },
+  contentWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    minHeight: '100%',
   },
 });
 

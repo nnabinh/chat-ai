@@ -2,11 +2,7 @@ import { useState } from 'react';
 import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 import * as Clipboard from 'expo-clipboard';
-import {
-  deleteMessage,
-  editMessage,
-  setMessageEditing,
-} from '../../chat/chatSlice';
+import { deleteMessage, editMessage, setMessageEditing } from '../chatSlice';
 
 export const useMessageActions = () => {
   const dispatch = useDispatch();

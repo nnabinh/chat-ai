@@ -11,12 +11,8 @@ import {
 import { BlurView } from 'expo-blur';
 import * as Clipboard from 'expo-clipboard';
 import { useDispatch } from 'react-redux';
-import {
-  deleteMessage,
-  editMessage,
-  setMessageEditing,
-} from '../store/chatSlice';
-import { Message } from '../types';
+import { deleteMessage, editMessage, setMessageEditing } from '../chatSlice';
+import { Message } from '../../../types';
 
 interface MessageBubbleProps {
   message: Message;

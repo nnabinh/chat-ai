@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useDispatch } from 'react-redux';
-import { addMessage, setTyping } from '../store/chatSlice';
-import { useSendMessageMutation } from '../store/api';
-import { SendIcon } from './Icons';
+import { addMessage, setTyping } from '../chatSlice';
+import { useSendMessageMutation } from '../api';
+import { SendIcon } from '@components/Icons';
 
 const ChatInput: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -22,7 +22,7 @@ const ChatInput: React.FC = () => {
       const userMessage = {
         text: message.trim(),
         isUser: true,
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       };
 
       // Add user message
@@ -62,7 +62,7 @@ const ChatInput: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <BlurView intensity={60} style={styles.inputContainer}>
+      <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
           value={message}
@@ -71,6 +71,8 @@ const ChatInput: React.FC = () => {
           placeholderTextColor="rgba(255, 255, 255, 0.5)"
           multiline
           maxLength={500}
+          scrollEnabled={true}
+          textAlignVertical="top"
         />
         <TouchableOpacity
           onPress={handleSend}
@@ -79,17 +81,15 @@ const ChatInput: React.FC = () => {
         >
           <SendIcon width={16} height={16} />
         </TouchableOpacity>
-      </BlurView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: 76, // Above the tab bar
-    left: 14,
-    right: 14,
+    paddingHorizontal: 14,
+    paddingBottom: 14,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
     lineHeight: 22,
-    maxHeight: 100,
+    paddingBottom: 6,
+    maxHeight: 88, // Approximately 4 lines (22 * 4)
   },
   sendButton: {
     width: 24,

@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Character } from '../types';
+import { Character } from '../../types';
 
 // Mock data for characters/fantasies
 const mockCharacters: Character[] = [
   {
     id: '1',
     name: 'Anya Volkov',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'Anya is a mysterious and captivating Russian beauty with piercing blue eyes and platinum blonde hair. Her enigmatic smile hides countless secrets...',
     fullDescription:
@@ -20,8 +20,8 @@ const mockCharacters: Character[] = [
   {
     id: '2',
     name: 'Elena Nightshade',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A mysterious sorceress who dwells in the shadows, Elena possesses ancient knowledge of dark magic and forbidden spells. Her powers are feared across the realm...',
     fullDescription:
@@ -33,8 +33,8 @@ const mockCharacters: Character[] = [
   {
     id: '3',
     name: 'Captain Rex',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A seasoned space marine with years of combat experience across the galaxy. Rex has seen it all and survived the impossible...',
     fullDescription:
@@ -46,8 +46,8 @@ const mockCharacters: Character[] = [
   {
     id: '4',
     name: 'Luna Starweaver',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'An ethereal being from the celestial realm, Luna weaves dreams and starlight into reality. Her gentle nature hides immense cosmic power...',
     likes: 3400,
@@ -57,8 +57,8 @@ const mockCharacters: Character[] = [
   {
     id: '5',
     name: 'Kai Shadowblade',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A master assassin turned protector, Kai walks the line between light and darkness. His past haunts him, but his resolve remains unshaken...',
     likes: 1800,
@@ -69,8 +69,8 @@ const mockCharacters: Character[] = [
   {
     id: '6',
     name: 'Dr. Aria Chen',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A brilliant scientist specializing in quantum physics and interdimensional research. Her discoveries have opened doorways to other realities...',
     likes: 920,
@@ -81,8 +81,8 @@ const mockCharacters: Character[] = [
   {
     id: '7',
     name: 'Zara the Wanderer',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A nomadic adventurer who has traveled through countless worlds and dimensions. Each journey teaches her something new about existence itself...',
     likes: 2750,
@@ -93,8 +93,8 @@ const mockCharacters: Character[] = [
   {
     id: '8',
     name: 'Prince Aldric',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       "The rightful heir to a kingdom lost in time, Aldric carries the weight of his people's hopes. His noble heart burns with the desire for justice...",
     likes: 1650,
@@ -104,8 +104,8 @@ const mockCharacters: Character[] = [
   {
     id: '9',
     name: 'Raven Blackheart',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'A pirate captain who rules the seven seas with an iron fist and a cunning mind. Her ship is her kingdom, and her crew is her family...',
     likes: 2200,
@@ -115,8 +115,8 @@ const mockCharacters: Character[] = [
   {
     id: '10',
     name: 'Sage Moonwhisper',
-    avatar: require('../../assets/images/anya-avatar.png'),
-    background: require('../../assets/images/anya-background.png'),
+    avatar: require('@assets/images/anya-avatar.png'),
+    background: require('@assets/images/anya-background.png'),
     description:
       'An ancient druid who communes with nature itself. The forest spirits speak through her, sharing wisdom from ages past...',
     likes: 1100,
@@ -127,8 +127,8 @@ const mockCharacters: Character[] = [
   {
     id: '11',
     name: 'Mika Kobuyashi',
-    avatar: require('../../assets/images/mika-avatar.png'),
-    background: require('../../assets/images/mika-background.png'),
+    avatar: require('@assets/images/mika-avatar.png'),
+    background: require('@assets/images/mika-background.png'),
     description:
       'Mika is a sweet and shy Japanese girl with warm brown eyes and silky black hair. She has an innocent charm that makes everyone want to protect her...',
     fullDescription:
@@ -166,7 +166,7 @@ export const api = createApi({
       },
     }),
     sendMessage: builder.mutation<
-      { text: string; timestamp: Date },
+      { text: string; timestamp: string },
       { message: string; characterId: string }
     >({
       queryFn: async ({ message }) => {
@@ -187,7 +187,7 @@ export const api = createApi({
         return {
           data: {
             text: randomResponse,
-            timestamp: new Date(),
+            timestamp: new Date().toISOString(),
           },
         };
       },

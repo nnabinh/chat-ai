@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Message, Character, ChatState } from '../types';
+import { Message, Character, ChatState } from '../../types';
 
 const mockCharacter: Character = {
   id: '1',
   name: 'Anya Volkov',
-  avatar: require('../../assets/images/anya-avatar.png'),
-  background: require('../../assets/images/anya-background.png'),
+  avatar: require('@assets/images/anya-avatar.png'),
+  background: require('@assets/images/anya-background.png'),
   description:
     'Anya is a mysterious and captivating Russian beauty with piercing blue eyes and platinum blonde hair. Her enigmatic smile hides countless secrets...',
   fullDescription:
@@ -21,7 +21,7 @@ const initialMessages: Message[] = [
     id: '1',
     text: mockCharacter.greeting,
     isUser: false,
-    timestamp: new Date(Date.now() - 1000 * 60 * 5), // 5 minutes ago
+    timestamp: new Date(Date.now() - 1000 * 60 * 5).toISOString(), // 5 minutes ago
   },
 ];
 
@@ -57,6 +57,7 @@ const chatSlice = createSlice({
       if (message) {
         message.text = action.payload.text;
         message.isEditing = false;
+        message.isEdited = true; // Mark message as edited
       }
     },
     setMessageEditing: (
@@ -81,7 +82,7 @@ const chatSlice = createSlice({
           id: `greeting-${action.payload.id}`,
           text: action.payload.greeting,
           isUser: false,
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         },
       ];
       state.isTyping = false;

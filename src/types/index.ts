@@ -2,8 +2,9 @@ export interface Message {
   id: string;
   text: string;
   isUser: boolean;
-  timestamp: Date;
+  timestamp: string; // Changed from Date to string for Redux serialization
   isEditing?: boolean;
+  isEdited?: boolean; // Flag to indicate if message has been edited
 }
 
 export interface Character {

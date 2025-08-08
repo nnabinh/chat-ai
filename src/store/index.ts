@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import chatReducer from '../features/chat/chatSlice';
-import { api } from '../features/chat/api';
+import chatReducer from '@features/home/chatSlice';
+import { api } from '@features/home/api';
 
 export const store = configureStore({
   reducer: {

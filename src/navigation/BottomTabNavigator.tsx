@@ -2,18 +2,18 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import HomeScreen from '../features/home/screens/HomeScreen';
-import SearchScreen from '../features/search/screens/SearchScreen';
-import CreateScreen from '../features/create/screens/CreateScreen';
-import MessagesScreen from '../features/messages/screens/MessagesScreen';
-import ProfileScreen from '../features/profile/screens/ProfileScreen';
+import HomeScreen from '@features/home/screens/HomeScreen';
+import SearchScreen from '@features/search/screens/SearchScreen';
+import CreateScreen from '@features/create/screens/CreateScreen';
+import MessagesScreen from '@features/messages/screens/MessagesScreen';
+import ProfileScreen from '@features/profile/screens/ProfileScreen';
 import {
   HomeIcon,
   SearchIcon,
   CreateIcon,
   MessagesIcon,
   ProfileIcon,
-} from '../components/Icons';
+} from '@components/Icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,6 +27,7 @@ const BottomTabNavigator: React.FC = () => {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
+        lazy: false,
         tabBarStyle: [
           styles.tabBar,
           {
@@ -123,7 +124,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   tabBarItem: {
-    paddingTop: 12,
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 0,

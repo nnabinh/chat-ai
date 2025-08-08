@@ -1,12 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  HeartIcon,
-  ChatIcon,
-  PhoneIcon,
-  MenuIcon,
-} from '../../../components/Icons';
+import { HeartIcon, ChatIcon, PhoneIcon, MenuIcon } from '@components/Icons';
 import { Character } from '../../../types';
 
 interface ChatHeaderProps {
@@ -25,12 +20,16 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
           <Image
             source={
               currentCharacter?.avatar ||
-              require('../../../../assets/images/anya-avatar.png')
+              require('@assets/images/anya-avatar.png')
             }
             style={styles.avatar}
           />
           <View style={styles.userDetails}>
-            <Text style={styles.userName}>
+            <Text
+              style={styles.userName}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
               {currentCharacter?.name || 'Anya Volkov'}
             </Text>
             <Text style={styles.userStatus}>Online</Text>
@@ -64,22 +63,22 @@ export const ChatHeader: React.FC<ChatHeaderProps> = ({ currentCharacter }) => {
 
 const styles = StyleSheet.create({
   header: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 1,
+    paddingTop: 0, // Will be set dynamically with safe area
+    paddingHorizontal: 0,
   },
   headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 14,
-    paddingBottom: 12,
+    paddingBottom: 0,
   },
   userInfo: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
+    marginRight: 20, // Increased margin for more space
+    maxWidth: '70%', // Prevent taking too much space
   },
   avatar: {
     width: 44,
@@ -89,6 +88,8 @@ const styles = StyleSheet.create({
   },
   userDetails: {
     flex: 1,
+    minWidth: 0, // Allows text to truncate if needed
+    justifyContent: 'center', // Vertically center the text content
   },
   userName: {
     fontFamily: 'ABC Favorit Unlicensed Trial',
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     color: '#E2E9ED',
-    marginBottom: 2,
+    marginBottom: 1, // Reduced margin for better centering
   },
   userStatus: {
     fontFamily: 'ABC Favorit Unlicensed Trial',
@@ -108,7 +109,9 @@ const styles = StyleSheet.create({
   headerActions: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 12, // Reduced gap to save space
+    flexShrink: 0, // Prevent shrinking
+    minWidth: 80, // Ensure minimum space for buttons
   },
   actionButton: {
     padding: 8,
@@ -123,9 +126,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     gap: 16,
-    marginLeft: 44,
-    alignSelf: 'flex-start',
+    marginLeft: 58, // Avatar width (44) + margin (12) + padding (2)
     marginHorizontal: 14,
+    marginTop: 0,
+    marginBottom: 8, // 8px spacing before ScrollView
+    alignSelf: 'flex-start',
   },
   statItem: {
     flexDirection: 'row',

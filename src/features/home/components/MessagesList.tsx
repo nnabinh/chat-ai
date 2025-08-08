@@ -33,19 +33,17 @@ export const MessagesList: React.FC<MessagesListProps> = ({
       <Text style={baseStyle}>
         {parts.map((part, index) => {
           if (part.startsWith('**') && part.endsWith('**')) {
-            // Bold text - remove ** and apply bold style
-            const boldText = part.slice(2, -2);
+            // Bold text - keep ** and apply bold style
             return (
               <Text key={index} style={[baseStyle, styles.boldText]}>
-                {boldText}
+                {part}
               </Text>
             );
           } else if (part.startsWith('*') && part.endsWith('*')) {
-            // Italic text - remove * and apply italic style
-            const italicText = part.slice(1, -1);
+            // Italic text - keep * and apply italic style
             return (
               <Text key={index} style={[baseStyle, styles.italicText]}>
-                {italicText}
+                {part}
               </Text>
             );
           } else {
@@ -120,6 +118,10 @@ export const MessagesList: React.FC<MessagesListProps> = ({
               </>
             )}
           </TouchableOpacity>
+          {/* Show "edited" indicator for edited user messages */}
+          {message.isUser && message.isEdited && (
+            <Text style={styles.editedIndicator}>edited</Text>
+          )}
         </View>
       ))}
     </View>
@@ -220,5 +222,12 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 12,
     fontWeight: '500',
+  },
+  editedIndicator: {
+    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.5)',
+    fontStyle: 'italic',
+    marginTop: 4,
+    alignSelf: 'flex-end',
   },
 });

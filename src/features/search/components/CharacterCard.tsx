@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { BlurView } from 'expo-blur';
-import { Character } from '../types';
-import { HeartIcon, ChatIcon } from './Icons';
+import { Character } from '../../../types';
+import { HeartIcon, ChatIcon } from '@components/Icons';
 
 interface CharacterCardProps {
   character: Character;
