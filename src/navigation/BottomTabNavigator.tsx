@@ -20,12 +20,7 @@ const TabLabel: React.FC<{ focused: boolean; title: string }> = ({
   focused,
   title,
 }) => (
-  <Text
-    style={[
-      styles.tabLabel,
-      { color: focused ? '#F43F3F' : '#AFAFAF' },
-    ]}
-  >
+  <Text style={[styles.tabLabel, { color: focused ? '#F43F3F' : '#AFAFAF' }]}>
     {title}
   </Text>
 );

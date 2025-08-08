@@ -11,7 +11,11 @@ import {
 import { BlurView } from 'expo-blur';
 import * as Clipboard from 'expo-clipboard';
 import { useDispatch } from 'react-redux';
-import { deleteMessage, editMessage, setMessageEditing } from '../store/chatSlice';
+import {
+  deleteMessage,
+  editMessage,
+  setMessageEditing,
+} from '../store/chatSlice';
 import { Message } from '../types';
 
 interface MessageBubbleProps {
@@ -78,10 +82,16 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
             autoFocus
           />
           <View style={styles.editActions}>
-            <TouchableOpacity onPress={handleCancelEdit} style={styles.editButton}>
+            <TouchableOpacity
+              onPress={handleCancelEdit}
+              style={styles.editButton}
+            >
               <Text style={styles.editButtonText}>Cancel</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSaveEdit} style={styles.editButton}>
+            <TouchableOpacity
+              onPress={handleSaveEdit}
+              style={styles.editButton}
+            >
               <Text style={styles.editButtonText}>Save</Text>
             </TouchableOpacity>
           </View>
@@ -91,7 +101,12 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
   }
 
   return (
-    <View style={[styles.container, message.isUser ? styles.userContainer : styles.aiContainer]}>
+    <View
+      style={[
+        styles.container,
+        message.isUser ? styles.userContainer : styles.aiContainer,
+      ]}
+    >
       <Pressable
         onLongPress={handleLongPress}
         delayLongPress={500}
@@ -100,7 +115,12 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
           message.isUser ? styles.userBubble : styles.aiBubble,
         ]}
       >
-        <Text style={[styles.text, message.isUser ? styles.userText : styles.aiText]}>
+        <Text
+          style={[
+            styles.text,
+            message.isUser ? styles.userText : styles.aiText,
+          ]}
+        >
           {message.text}
         </Text>
       </Pressable>

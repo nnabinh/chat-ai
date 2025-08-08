@@ -20,7 +20,10 @@ interface CharacterCardProps {
 const { width: screenWidth } = Dimensions.get('window');
 const cardWidth = screenWidth;
 
-const CharacterCard: React.FC<CharacterCardProps> = ({ character, onPress }) => {
+const CharacterCard: React.FC<CharacterCardProps> = ({
+  character,
+  onPress,
+}) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       {/* Background Image */}

@@ -18,11 +18,7 @@ const SearchScreen: React.FC = () => {
   const [allCharacters, setAllCharacters] = useState<Character[]>([]);
   const [hasMore, setHasMore] = useState(true);
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-  } = useGetCharactersQuery(
+  const { data, isLoading, isFetching } = useGetCharactersQuery(
     { page, limit: 3 },
     { skip: !hasMore }
   );
@@ -32,7 +28,7 @@ const SearchScreen: React.FC = () => {
       if (page === 0) {
         setAllCharacters(data.data);
       } else {
-        setAllCharacters(prev => [...prev, ...data.data]);
+        setAllCharacters((prev) => [...prev, ...data.data]);
       }
       setHasMore(data.hasMore);
     }
@@ -40,7 +36,7 @@ const SearchScreen: React.FC = () => {
 
   const loadMore = useCallback(() => {
     if (!isFetching && hasMore) {
-      setPage(prev => prev + 1);
+      setPage((prev) => prev + 1);
     }
   }, [isFetching, hasMore]);
 

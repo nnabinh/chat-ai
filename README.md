@@ -54,7 +54,7 @@ src/
 ### Prerequisites
 
 - Node.js (v18.18+ recommended)
-- npm or yarn
+- Yarn (v3.6+ recommended)
 - Expo CLI
 - iOS Simulator or Android Emulator (or physical device)
 
@@ -68,19 +68,19 @@ src/
 
 2. Install dependencies:
    ```bash
-   npm install
+   yarn install
    ```
 
 3. Start the development server:
    ```bash
-   npm start
+   yarn start
    ```
 
 4. Run on your preferred platform:
    ```bash
-   npm run ios      # iOS Simulator
-   npm run android  # Android Emulator
-   npm run web      # Web browser
+   yarn ios      # iOS Simulator
+   yarn android  # Android Emulator
+   yarn web      # Web browser
    ```
 
 ## Key Features Explained
@@ -111,13 +111,13 @@ src/
 ## Development Scripts
 
 ```bash
-npm start          # Start Expo development server
-npm run ios        # Run on iOS simulator
-npm run android    # Run on Android emulator
-npm run web        # Run in web browser
-npm run lint       # Run ESLint
-npm run lint:fix   # Fix ESLint issues
-npm run format     # Format code with Prettier
+yarn start          # Start Expo development server
+yarn ios            # Run on iOS simulator
+yarn android        # Run on Android emulator
+yarn web            # Run in web browser
+yarn lint           # Run ESLint
+yarn lint:fix       # Fix ESLint issues
+yarn format         # Format code with Prettier
 ```
 
 ## Contributing

@@ -74,10 +74,7 @@ const ChatInput: React.FC = () => {
         />
         <TouchableOpacity
           onPress={handleSend}
-          style={[
-            styles.sendButton,
-            { opacity: message.trim() ? 1 : 0.5 },
-          ]}
+          style={[styles.sendButton, { opacity: message.trim() ? 1 : 0.5 }]}
           disabled={!message.trim()}
         >
           <SendIcon />

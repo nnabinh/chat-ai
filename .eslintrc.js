@@ -1,9 +1,5 @@
 module.exports = {
-  extends: [
-    'eslint:recommended',
-    '@typescript-eslint/recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'prettier'],
   parserOptions: {
@@ -16,18 +12,19 @@ module.exports = {
   env: {
     es6: true,
     node: true,
-    'react-native/react-native': true,
   },
   rules: {
     'prettier/prettier': 'error',
-    '@typescript-eslint/no-unused-vars': 'warn',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
+    'no-unused-vars': 'warn',
+    'no-console': 'warn',
   },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
+  ignorePatterns: [
+    'node_modules/',
+    'dist/',
+    'build/',
+    '.expo/',
+    'web-build/',
+    '*.config.js',
+    '*.config.ts',
+  ],
 };
